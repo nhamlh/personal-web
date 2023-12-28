@@ -1,7 +1,0 @@
-nhamlh.me {
-	reverse_proxy web:80
-}
-
-blog.nhamlh.me {
-	reverse_proxy blog:80
-}

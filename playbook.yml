@@ -48,36 +48,50 @@
       pip:
         name: docker
 
-    - name: Pull default Docker image
-      community.docker.docker_image:
-        name: "{{ default_container_image }}"
-        source: pull
-
-    - name: Create default containers
-      community.docker.docker_container:
-        name: "{{ default_container_name }}{{ item }}"
-        image: "{{ default_container_image }}"
-        command: "{{ default_container_command }}"
-        state: present
-      with_sequence: count={{ container_count }}
+    # - name: Pull default Docker image
+    #   community.docker.docker_image:
+    #     name: "{{ default_container_image }}"
+    #     source: pull
+    #
+    # - name: Create default containers
+    #   community.docker.docker_container:
+    #     name: "{{ default_container_name }}{{ item }}"
+    #     image: "{{ default_container_image }}"
+    #     command: "{{ default_container_command }}"
+    #     state: present
+    #   with_sequence: count={{ container_count }}
 
 
     - name: check/init swarm
       docker_swarm:
         state: present
 
-    - name: Copy services config
+    # Web & Blog stack
+    - name: Copy web stack config
       copy:
-        src: ./services
-        dest: .
-        # owner: foo
-        # group: foo
+        src: ./stacks/web
+        dest: ./stacks/
         mode: 0644
 
-    - name: Deploy stack from a compose file
+    - name: Deploy web stack from a compose file
       community.docker.docker_stack:
         state: present
         prune: true
-        name: mystack
+        name: web
         compose:
-          - ./services/docker-compose.yml
+          - ./stacks/web/compose.yml
+            
+    # Mail stack
+    - name: Copy mail stack config
+      copy:
+        src: ./stacks/mail
+        dest: ./stacks/
+        mode: 0644
+
+    - name: Deploy mail stack from a compose file
+      community.docker.docker_stack:
+        state: present
+        prune: true
+        name: mail
+        compose:
+          - ./stacks/mail/compose.yml

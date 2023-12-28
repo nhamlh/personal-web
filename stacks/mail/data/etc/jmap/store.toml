@@ -1,0 +1,21 @@
+#############################################
+# JMAP server store configuration
+#############################################
+
+[jmap.store]
+data = "%{DEFAULT_STORE}%"
+fts = "%{DEFAULT_STORE}%"
+blob = "%{DEFAULT_STORE}%"
+
+[jmap.encryption]
+enable = true
+append = false
+
+[jmap.spam]
+header = "X-Spam-Status: Yes"
+
+[jmap.fts]
+default-language = "en"
+
+[jmap.cluster]
+node-id = 1

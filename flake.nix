@@ -17,6 +17,7 @@
             modules = [{
               # https://devenv.sh/reference/options/
               packages = with pkgs; [
+                terraform
                 ansible
               ];
 

@@ -66,10 +66,10 @@
       docker_swarm:
         state: present
 
-    - name: Copy docker-compose.yml
+    - name: Copy services config
       copy:
-        src: ./docker-compose.yml
-        dest: ./docker-compose.yml
+        src: ./services
+        dest: .
         # owner: foo
         # group: foo
         mode: 0644
@@ -77,6 +77,7 @@
     - name: Deploy stack from a compose file
       community.docker.docker_stack:
         state: present
+        prune: true
         name: mystack
         compose:
-          - ./docker-compose.yml
+          - ./services/docker-compose.yml

@@ -16,7 +16,7 @@ Utilized tools:
 - Stalwart - modern all-in-one mail server with TLS, DKIM, SPF and DMARC support out of the box
 
 ### Sending mail out
-Most cloud providers block outgoing 25 port so I can't get approriate host which has port 25 open on time. AWS support ticket to unblock port 25 didn't got reply yet. Therefore, sending email isn't functioning even though I've set all DKIM, SPF and DMARC for the domain and pretty sure it will work.
+Most cloud providers block outgoing 25 port so I can't get approriate host which has port 25 open on time. AWS support ticket to unblock port 25 didn't got reply yet; registered for DigitalOcean and Linode and couldn't activate my account (SMS OTP code didn't come, heck). Therefore, sending email isn't functioning even though I've set all DKIM, SPF and DMARC for the domain and pretty sure it will work.
 
 ## Installation
 

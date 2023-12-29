@@ -16,12 +16,12 @@
     path: ./stacks/web/mail/{{ item }}
     state: directory
     mode: '0755'
-    loop:
-      - bin
-      - data
-      - logs
-      - queue
-      - reports
+  loop:
+    - bin
+    - data
+    - logs
+    - queue
+    - reports
 
 - name: Deploy web stack from a compose file
   community.docker.docker_stack:

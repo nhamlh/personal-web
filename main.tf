@@ -15,11 +15,6 @@ terraform {
       source  = "hashicorp/tls"
       version = "4.0.5"
     }
-
-    ansible = {
-      source  = "ansible/ansible"
-      version = "1.1.0"
-    }
   }
 }
 
@@ -47,18 +42,18 @@ resource "gandi_livedns_record" "a_records" {
 }
 
 resource "gandi_livedns_record" "mx" {
-  name     = "@"
-  ttl      = 300
-  type     = "MX"
-  values   = ["10 mail.${data.gandi_domain.this.name}"]
-  zone     = data.gandi_domain.this.name
+  name   = "@"
+  ttl    = 300
+  type   = "MX"
+  values = ["10 mail.${data.gandi_domain.this.name}."]
+  zone   = data.gandi_domain.this.name
 }
 
 resource "gandi_livedns_record" "domainkey" {
   name   = "stalwart._domainkey"
   ttl    = 300
   type   = "TXT"
-  values = ["\"v=DKIM1;k=rsa p=${tls_private_key.dkim.public_key_openssh}\""]
+  values = ["\"v=DKIM1;k=rsa p=${var.dkim_public_key}\""]
   zone   = data.gandi_domain.this.name
 }
 
@@ -106,9 +101,9 @@ data "aws_ami" "ubuntu" {
 
 resource "aws_instance" "this" {
   #ami             = data.aws_ami.ubuntu.id
-  ami              = "ami-0d96ec8a788679eb2"
-  instance_type   = "t3.small"
-  key_name        = aws_key_pair.owner.key_name
+  ami                    = "ami-0d96ec8a788679eb2"
+  instance_type          = "t3.small"
+  key_name               = aws_key_pair.owner.key_name
   vpc_security_group_ids = [aws_security_group.this.id]
 
   tags = {
@@ -156,42 +151,9 @@ resource "aws_security_group" "this" {
 }
 
 #################################
-# Ansible
-#################################
-
-# resource "ansible_playbook" "playbook" {
-#   playbook   = "playbook.yml"
-#   name       = aws_eip.this.public_ip
-#   replayable = true
-
-#   extra_vars = {
-#     dkim_public_key  = tls_private_key.dkim.public_key
-#     dkim_private_key = tls_private_key.dkim.private_key
-#   }
-# }
-
-# resource "ansible_host" "this" {
-#   name = aws_eip.this.public_ip
-
-#   variables = {
-#     ansible_user = "ubuntu"
-#   }
-# }
-
-resource "tls_private_key" "dkim" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
-}
-
-#################################
 # Outputs
 #################################
 
 output "instance_ip" {
   value = aws_eip.this.public_ip
-}
-
-output "dkim_private_key" {
-  value     = tls_private_key.dkim.private_key_openssh
-  sensitive = true
 }

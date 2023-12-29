@@ -3,8 +3,8 @@
 #############################################
 
 [macros]
-host = "mail.nhamlh.me"
-default_domain = "nhamlh.me"
+host = "mail.{{ base_domain }}"
+default_domain = "{{ base_domain }}"
 base_path = "/opt/stalwart-mail"
 default_directory = "internal"
 default_store = "rocksdb"

@@ -1,11 +1,11 @@
-nhamlh.me {
+{{ base_domain }} {
 	reverse_proxy web:80
 }
 
-blog.nhamlh.me {
+blog.{{ base_domain }} {
 	reverse_proxy blog:80
 }
 
-mail.nhamlh.me {
+mail.{{ base_domain }} {
 	reverse_proxy mail:8080
 }

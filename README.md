@@ -97,7 +97,7 @@ grep password /opt/stalwart-mail/logs/*
 stalwart-cli --url https://localhost:8080 domain create nhamlh.me
 
 # Create mailbox named hi
-stalwart-cli --url https://localhost:8080 account create --addresses hi@nhamlh.me hi $MAILBOX_PASSWORD
+stalwart-cli --url https://localhost:8080 account create --addresses hi@nhamlh.me hi $MAILBOX_PASSWD
 ```
 
 #### Reverse DNS

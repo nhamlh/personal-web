@@ -1,0 +1,32 @@
+---
+- name: Create private key file for dkim
+  copy:
+    dest: "./stacks/web/mail/etc/dkim/default.key"
+    content: |
+      {{ dkim_private_key }}
+
+- name: Copy web stack config
+  copy:
+    src: stacks/web
+    dest: ./stacks/
+    mode: 0644
+
+- name: Create stalwart's required dirs if it does not exist
+  ansible.builtin.file:
+    path: ./stacks/web/mail/{{ item }}
+    state: directory
+    mode: '0755'
+    loop:
+      - bin
+      - data
+      - logs
+      - queue
+      - reports
+
+- name: Deploy web stack from a compose file
+  community.docker.docker_stack:
+    state: present
+    prune: true
+    name: web
+    compose:
+      - ./stacks/web/compose.yml

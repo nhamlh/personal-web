@@ -1,6 +1,0 @@
-Add the following DNS records to your domain in order to enable DKIM, SPF and DMARC:
-
-stalwart._domainkey.nhamlh.me. IN TXT "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApLQKqu4qhhxXZ/6TwPPUrHPZBXrE8B4/5anwCuVqnTvalgEZ7l7/6Vxm9u2frKSaQ81Qa9biNO3MsG6+lozfI2lMFf4WIHhSXfTIg5amTqIU8pnA4/m7aNALlS/JCKfzUZMALAYDjI5Kvznzx1e8xMAkkNsPXxx0IO0QRQP1YkcQ1POu2I8TmE5rVazYuNx+5FeX7lHYEZ/oTFINqvssGhRb1A1FAGvn6t1CagU4fGDJIQWhbQjs91ZAgJniBujg03cYUGXe4lKNH3fKWim5dNjitgjl6+oVnxTgSzwBamXYWfex5GB5Z6Mpn79lssh0fOu0DAuEUV9NrXdioh623QIDAQAB"
-nhamlh.me. IN TXT "v=spf1 a:mail.nhamlh.me mx -all ra=postmaster"
-mail.nhamlh.me. IN TXT "v=spf1 a -all ra=postmaster"
-_dmarc.nhamlh.me. IN TXT "v=DMARC1; p=none; rua=mailto:postmaster@nhamlh.me; ruf=mailto:postmaster@nhamlh.me"

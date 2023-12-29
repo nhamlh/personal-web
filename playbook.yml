@@ -2,9 +2,8 @@
 - hosts: all
   become: true
 
-  vars:
-    dkim_private_key: "foobar"
-    base_domain: nhamlh.me
+  vars_files:
+    - ansible_vars
 
   roles:
     - base

@@ -53,7 +53,7 @@ resource "gandi_livedns_record" "domainkey" {
   name   = "stalwart._domainkey"
   ttl    = 300
   type   = "TXT"
-  values = ["\"v=DKIM1;k=rsa p=${var.dkim_public_key}\""]
+  values = ["\"v=DKIM1;k=rsa;p=${var.dkim_public_key}\""]
   zone   = data.gandi_domain.this.name
 }
 
@@ -61,7 +61,7 @@ resource "gandi_livedns_record" "spf" {
   name   = "@"
   ttl    = 300
   type   = "TXT"
-  values = ["\"v=spf1 a:mail.${data.gandi_domain.this.name} mx -all ra=postmaster\""]
+  values = ["\"v=spf1 a:mail.${data.gandi_domain.this.name} mx -all\""]
   zone   = data.gandi_domain.this.name
 }
 

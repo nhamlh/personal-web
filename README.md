@@ -93,6 +93,7 @@ sudo docker exec -it <mail container name> bash
 # Get admin password
 grep password /opt/stalwart-mail/logs/*
 
+# Create domain for mailboxes
 stalwart-cli --url https://localhost:8080 domain create nhamlh.me
 
 # Create mailbox named hi

@@ -8,6 +8,7 @@ services:
       - 443:443
     volumes:
       - ./proxy:/etc/caddy
+      - proxy_data:/data/caddy
 
   web:
     image: nginx
@@ -38,6 +39,22 @@ services:
       - MYSQL_USER=wordpress
       - MYSQL_PASSWORD=wordpress
 
+  mail:
+    image: stalwartlabs/mail-server:latest
+    ports:
+      - 8080:8080
+      - 25:25
+      - 587:587
+      - 465:465
+      - 143:143
+      - 993:993
+      - 4190:4190
+    volumes:
+      - ./mail:/opt/stalwart-mail
+      - proxy_data:/data/caddy:ro
+
 volumes:
+  proxy_data:
   db_data:
   wp_data:
+

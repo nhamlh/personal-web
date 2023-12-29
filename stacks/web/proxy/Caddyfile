@@ -5,3 +5,7 @@ nhamlh.me {
 blog.nhamlh.me {
 	reverse_proxy blog:80
 }
+
+mail.nhamlh.me {
+	reverse_proxy mail:8080
+}

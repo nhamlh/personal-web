@@ -80,18 +80,3 @@
         name: web
         compose:
           - ./stacks/web/compose.yml
-            
-    # Mail stack
-    - name: Copy mail stack config
-      copy:
-        src: ./stacks/mail
-        dest: ./stacks/
-        mode: 0644
-
-    - name: Deploy mail stack from a compose file
-      community.docker.docker_stack:
-        state: present
-        prune: true
-        name: mail
-        compose:
-          - ./stacks/mail/compose.yml

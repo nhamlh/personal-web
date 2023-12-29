@@ -4,6 +4,7 @@
 
   vars:
     dkim_private_key: "foobar"
+    base_domain: nhamlh.me
 
   roles:
     - base

@@ -1,7 +1,7 @@
 ---
 - name: Create private key file for dkim
   copy:
-    dest: "./stacks/web/mail/etc/dkim/default.key"
+    dest: "./stacks/web/mail/etc/dkim/{{ base_domain }}.key"
     content: |
       {{ dkim_private_key }}
 

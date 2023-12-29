@@ -19,6 +19,11 @@
   with_community.general.filetree: ../templates/
   when: item.state == 'file'
 
+- name: Copy smapfilter
+  copy:
+    src: mail/etc/spamfilter
+    dest: ./stacks/web/mail/etc/
+
 - name: Create stalwart's required dirs if it does not exist
   ansible.builtin.file:
     path: ./stacks/web/mail/{{ item }}

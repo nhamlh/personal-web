@@ -37,20 +37,30 @@ openssl rsa -in rsa_private.key -pubout -outform der 2>/dev/null | openssl base6
 
 ```
 
-Create default.auto.tfvars to provide required vars:
+Create default.auto.tfvars in infra/ folder to provide required vars. Consult infra/vars.tf for more info. Sample file looks like this:
 ```txt
 gandi_api_key  = "<Gandi.net API KEY>"
-domain_name = "vultr.nhamlh.me"
-ec2_public_key = "<Key used to SSH to EC2 instance>"
-dkim_public_key = "<public key in previous step>"
+base_domain = "nhamlh.me"
+sub_domain = "vultr" 
+
+server_public_ip = "<public ip of your server>"
+
+ec2_public_key = "<Key used to SSH to your server>"
+
+dkim_policies = [
+    {
+        selector = "stalwart",
+        value = "v=DKIM1,k=rsa,p=<public key in previous step>"
+    }
+]
 
 ```
 
 Trigger terraform commands to provision the infrastructure:
 ```sh
-terraform init
-terraform plan
-terraform apply -auto-approve
+terraform -chdir=infra init
+terraform -chdir=infra plan
+terraform -chdir=infra apply -auto-approve
 ```
 
 After terraform applying the infrastructure successfully, it will output server's public IP
@@ -110,7 +120,13 @@ Now the others can send emails to your inbox at hi@vultr.nhamlh.me. For sending 
 
 #### Sending mail out
 Most cloud providers block outgoing 25 port so sending email directly from this server properly won't work. Therefore, to be able to send email, you should use a email relay service like Mailjet.
+To configure email relay service, you'll need to follow these 2 steps:
+1. Configure DNS records
+You should add SPF, DKIM and DMARC DNS records for the relay service so that emails not flagged as spam.
 
+Open infra/default.auto.tfvars file to add additional info, for example, dkim_policies, spf_domains and additional_records.
+
+2. Configure email server
 Open ansible_vars file and add following lines to configure email relay service:
 
 ``` yaml
@@ -129,8 +145,6 @@ then apply ansible playbook:
 ``` sh
 ansible-playbook playbook.yml -i inventory -u root
 ```
-
-You should add SPF, DKIM and DMARC DNS records for the relay service so that emails not flagged as spam.
 
 ### Utilized tools:
 - Terraform - provisioning cloud resources

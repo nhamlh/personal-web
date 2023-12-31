@@ -15,7 +15,7 @@ provider "gandi" {
 module "dns" {
   source = "./modules/dns"
 
-  server_public_ip   = var.aws ? module.aws[0].public_ip : var.server_public_ip
+  server_public_ip   = var.aws == true ? module.aws[0].public_ip : var.server_public_ip
   base_domain        = var.base_domain
   sub_domain         = var.sub_domain
   dkim_policies      = var.dkim_policies
@@ -33,5 +33,5 @@ module "aws" {
 }
 
 output "server_public_ip" {
-  value = module.aws.public_ip
+  value = var.aws == true ? module.aws[0].public_ip : var.server_public_ip
 }

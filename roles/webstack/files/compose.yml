@@ -12,6 +12,8 @@ services:
 
   web:
     image: nginx
+    volumes:
+      - ./web:/var/html/www
 
   blog:
     image: wordpress:latest

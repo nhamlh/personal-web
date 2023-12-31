@@ -41,6 +41,11 @@
     src: compose.yml
     dest: ./stacks/web/
 
+- name: Copy static web
+  copy:
+    src: web/
+    dest: ./stacks/web/
+
 - name: Deploy web stack from a compose file
   community.docker.docker_stack:
     state: present

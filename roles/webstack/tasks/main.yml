@@ -44,7 +44,7 @@
 - name: Copy static web
   copy:
     src: web/
-    dest: ./stacks/web/
+    dest: ./stacks/web/web/
 
 - name: Deploy web stack from a compose file
   community.docker.docker_stack:

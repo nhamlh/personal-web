@@ -12,11 +12,11 @@ variable "sub_domain" {
   default     = ""
 }
 
-variable "dkim_public_key" {
+variable "vpc_id" {
   type = string
 }
 
-variable "server_public_ip" {
+variable "ec2_public_key" {
   type = string
 }
 

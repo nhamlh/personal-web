@@ -50,5 +50,5 @@ resource "aws_security_group" "this" {
 }
 
 output "public_ip" {
-  value = aws_aws_eip.public_ip
+  value = aws_eip.this.public_ip
 }

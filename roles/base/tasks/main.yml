@@ -41,4 +41,4 @@
 - name: check/init swarm
   docker_swarm:
     state: present
-    advertise_addr: "{{ instance_public_ip }}"
+    advertise_addr: "{{ server_public_ip }}"

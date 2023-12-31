@@ -13,6 +13,23 @@ timeout = "1m"
 implicit = false
 allow-invalid-certs = true
 
+{% if email['relay']['enabled'] %}
+[remote."relay"]
+address = "mail['relay']['domain']"
+port = "mail['relay']['port']"
+protocol = "smtp"
+concurrency = 10
+timeout = "1m"
+
+[remote."relay".auth]
+username = "{{ email['relay']['auth']['username'] }}"
+secret = "{{ email['relay']['auth']['secret'] }}"
+
+[remote."relay".tls]
+implicit = false
+allow-invalid-certs = false
+{% endif %}
+
 #[remote."local".auth]
 #username = ""
 #secret = ""

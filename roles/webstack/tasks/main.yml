@@ -17,7 +17,7 @@
   copy:
     dest: "./stacks/web/mail/etc/dkim/{{ base_domain }}.key"
     content: |
-      {{ dkim_private_key }}
+      {{ mail['dkim_private_key'] }}
 
 - name: Copy spamfilter
   copy:

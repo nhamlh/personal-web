@@ -12,14 +12,22 @@ notify = ["1d", "3d"]
 expire = "5d"
 
 [queue.outbound]
-#hostname = "%{HOST}%"
-next-hop = [ { if = "rcpt-domain", in-list = "%{DEFAULT_DIRECTORY}%/domains", then = "local" }, 
+next-hop = [ { if = "rcpt-domain", in-list = "%{DEFAULT_DIRECTORY}%/domains", then = "local" },
+{% if mail['relay']['enabled'] %}
+             { else = "relay" } ]
+{% else %}
              { else = false } ]
+{% endif %}
 ip-strategy = "ipv4-then-ipv6"
 
 [queue.outbound.tls]
-dane = "optional"
+{% if mail['relay']['enabled'] %}
+dane = "disable"
+mta-sts = "disable"
+{% else %}
+ane = "optional"
 mta-sts = "optional"
+{% endif %}
 starttls = "require"
 allow-invalid-certs = false
 

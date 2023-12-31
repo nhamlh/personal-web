@@ -15,7 +15,7 @@ provider "gandi" {
 module "dns" {
   source = "./modules/dns"
 
-  server_public_ip   = module.aws.public_ip
+  server_public_ip   = var.aws ? module.aws[0].public_ip : var.server_public_ip
   base_domain        = var.base_domain
   sub_domain         = var.sub_domain
   dkim_policies      = var.dkim_policies
@@ -24,6 +24,8 @@ module "dns" {
 }
 
 module "aws" {
+  count = var.aws ? 1 : 0
+
   source = "./modules/aws"
 
   ec2_public_key = var.ec2_public_key

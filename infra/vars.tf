@@ -12,12 +12,28 @@ variable "sub_domain" {
   default     = ""
 }
 
+variable "aws" {
+  type        = bool
+  description = "(optional)"
+  default     = false
+}
+
 variable "vpc_id" {
-  type = string
+  type        = string
+  description = "required when enable aws"
+  default     = ""
 }
 
 variable "ec2_public_key" {
-  type = string
+  type        = string
+  description = "required when enable aws"
+  default     = ""
+}
+
+variable "server_public_ip" {
+  type        = string
+  description = "required when disable aws (DNS only mode)"
+  default     = ""
 }
 
 variable "dkim_policies" {

@@ -1,12 +1,22 @@
 
 # Personal web project
 
+Deploy some services for a personal web project:
+- A front page
+- A blog
+- An email server
+
 ## General
 
-The application stack is deployed onto AWS EC2, using gandi.net DNS service. Base domain name is nhamlh.me, services:
-- https://nhamlh.me - default web server running nginx 
-- https://blog.nhamlh.me - wordpress
-- hi@nhamlh.me - default mailbox
+This project is organized in 2 parts:
+- Infrastructure. Currently support AWS2 or Vultr for provisioning a Linux box, Gandi for DNS registry. To use other VPS service or DNS registry, you can configure it manually and apply application stack to deploy services.
+- Application stack. Use Ansible to configure services.
+
+## Demo
+This project is deployed at vultr.nhamlh.me. You can access services at:
+- https://vult.nhamlh.me - front pageg
+- https://blog.vultr.nhamlh.me - Wordpress blog
+- hi@vultr.nhamlh.me - default mailbox. You can reach out to me and send a greeting email to this address and I'll reply you back.
 
 Utilized tools:
 - Terraform - provisioning cloud resources
@@ -57,7 +67,7 @@ terraform apply -auto-approve
 After terraform applying the infrastructure successfully, it will output server's public IP
 
 
-#### Application stack
+### Application stack
 The application stack - web, blog and mail - is configured and managed by Ansible.
 
 Create ansible inventory:
@@ -99,6 +109,12 @@ stalwart-cli --url https://localhost:8080 domain create nhamlh.me
 # Create mailbox named hi
 stalwart-cli --url https://localhost:8080 account create --addresses hi@nhamlh.me hi $MAILBOX_PASSWD
 ```
+
+### Email setup
+While services are spawned automatically using Ansible, the email server need some manual steps to function.
+
+
+### DNS
 
 #### Reverse DNS
 We need reverse DNS for our public IP. However, Terraform provider doesn't support such setting yet thus we'll need to configure it manually. For AWS, go to EC2 service, select Elastic IP tab, search for our EIP  then click Update reversed DNS to update.

@@ -1,0 +1,61 @@
+version: "3"
+
+services:
+  proxy:
+    image: caddy:2.7.6
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./proxy:/etc/caddy
+      - proxy_data:/data/caddy
+
+  web:
+    image: nginx
+
+  blog:
+    image: wordpress:latest
+    volumes:
+      - wp_data:/var/www/html
+    restart: always
+    environment:
+      - WORDPRESS_DB_HOST=mariadb
+      - WORDPRESS_DB_USER=wordpress
+      - WORDPRESS_DB_PASSWORD=wordpress
+      - WORDPRESS_DB_NAME=wordpress
+
+  mariadb:
+    # We use a mariadb image which supports both amd64 & arm64 architecture
+    image: mariadb:10.6.4-focal
+    # If you really want to use MySQL, uncomment the following line
+    #image: mysql:8.0.27
+    command: '--default-authentication-plugin=mysql_native_password'
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=s0_s3cur3_y0u_c4n_n0t_h4ck
+      - MYSQL_DATABASE=wordpress
+      - MYSQL_USER=wordpress
+      - MYSQL_PASSWORD=wordpress
+
+  mail:
+    image: stalwartlabs/mail-server:latest
+    ports:
+      - 8080:8080
+      - 25:25
+      - 587:587
+      - 465:465
+      - 143:143
+      - 993:993
+      - 4190:4190
+    volumes:
+      - ./mail:/opt/stalwart-mail
+      - proxy_data:/data/caddy:ro
+
+volumes:
+  proxy_data:
+  db_data:
+  wp_data:
+
+

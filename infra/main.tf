@@ -1,13 +1,4 @@
 
-terraform {
-  required_providers {
-    gandi = {
-      source  = "go-gandi/gandi"
-      version = "2.2.4"
-    }
-  }
-}
-
 provider "gandi" {
   key = var.gandi_api_key
 }
@@ -33,4 +24,15 @@ module "dns" {
       values = ["68546c1f102bf5ed1ab21541c8c3e387"]
     }
   ]
+}
+
+module "aws" {
+  source = "./modules/aws"
+
+  ec2_public_key = var.ec2_public_key
+  vpc_id         = var.vpc_id
+}
+
+output "server_public_ip" {
+  value = aws.outputs.public_ip
 }
